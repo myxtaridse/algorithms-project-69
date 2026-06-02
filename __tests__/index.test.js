@@ -28,3 +28,7 @@ test('should work correctly, even if the substring has an uppercase', () => {
 test('should work correctly, taking into account the relevance', () => {
   expect(search(docs, 'shoot')).toEqual(['doc2', 'doc1'])
 })
+
+test('should work correctly, taking into account the fuzzy search', () => {
+  expect(search(docs, 'shoot at me')).toEqual(['doc2', 'doc1'])
+})
