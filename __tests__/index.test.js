@@ -16,3 +16,11 @@ test('should correctly show the names of the two documents that have the given w
 test('should output an empty array because no documents are specified', () => {
   expect(search([], 'shoot')).toEqual([])
 })
+
+test('should work correctly, even if there is a character in the substring', () => {
+  expect(search([], 'shoot!')).toEqual([])
+})
+
+test('should work correctly, even if the substring has an uppercase', () => {
+  expect(search([], 'Shoot')).toEqual([])
+})
