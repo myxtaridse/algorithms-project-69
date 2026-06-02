@@ -10,7 +10,7 @@ beforeAll(() => {
 })
 
 test('should correctly show the names of the two documents that have the given word', () => {
-  expect(search(docs, 'shoot')).toEqual(['doc1', 'doc2'])
+  expect(search(docs, 'shoot')).toEqual(['doc2', 'doc1'])
 })
 
 test('should output an empty array because no documents are specified', () => {
@@ -18,9 +18,13 @@ test('should output an empty array because no documents are specified', () => {
 })
 
 test('should work correctly, even if there is a character in the substring', () => {
-  expect(search(docs, 'shoot!')).toEqual(['doc1', 'doc2'])
+  expect(search(docs, 'shoot!')).toEqual(['doc2', 'doc1'])
 })
 
 test('should work correctly, even if the substring has an uppercase', () => {
-  expect(search(docs, 'Shoot')).toEqual(['doc1', 'doc2'])
+  expect(search(docs, 'Shoot')).toEqual(['doc2', 'doc1'])
+})
+
+test('should work correctly, taking into account the relevance', () => {
+  expect(search(docs, 'shoot')).toEqual(['doc2', 'doc1'])
 })
