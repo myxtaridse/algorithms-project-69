@@ -18,9 +18,9 @@ test('should output an empty array because no documents are specified', () => {
 })
 
 test('should work correctly, even if there is a character in the substring', () => {
-  expect(search([], 'shoot!')).toEqual([])
+  expect(search(docs, 'shoot!')).toEqual(['doc1', 'doc2'])
 })
 
 test('should work correctly, even if the substring has an uppercase', () => {
-  expect(search([], 'Shoot')).toEqual([])
+  expect(search(docs, 'Shoot')).toEqual(['doc1', 'doc2'])
 })
