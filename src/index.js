@@ -1,21 +1,37 @@
-const search = (docs, substring) => {
-  const splitedSub = substring.split(' ').map(s => s.match(/\w+/))
-  const regexpString = splitedSub.map(s => `\\b${s}\\b`).join('|')
-  const newRegex = new RegExp(regexpString, 'ig')
+const buildDictionary = (docs) => {
+  const dictionary = {}
+  docs.forEach((doc) => {
+    const removeApostrophe = doc.text.replace(/'/g, '')
+    console.log(removeApostrophe)
+    const splited = removeApostrophe.split(' ').map(s => s.toLowerCase().match(/\w+/))
 
-  return docs
-    .filter(doc => doc.text.match(newRegex))
-    .map((doc) => {
-      const uniqueCount = splitedSub.filter(s => doc.text.match(`\\b${s}\\b`)).length
-      const totalCount = doc.text.match(newRegex).length
-      return { id: doc.id, uniqueCount, totalCount }
-    })
-    .sort((a, b) => {
-      if (a.uniqueCount !== b.uniqueCount) {
-        return b.uniqueCount - a.uniqueCount
+    splited.forEach((str) => {
+      if (Object.hasOwn(dictionary, str)) {
+        if (!dictionary[str].includes(doc.id)) {
+          dictionary[str].push(doc.id)
+        }
       }
-      return b.totalCount - a.totalCount
+      else {
+        dictionary[str] = [doc.id]
+      }
     })
-    .map(doc => doc.id)
+  })
+  return dictionary
 }
+
+const search = (docs, substring) => {
+  const dictionary = buildDictionary(docs)
+
+  const splitedSub = substring.split(' ').map(s => s.toLowerCase().match(/\w+/)).filter(s => s).map(m => m[0])
+  const filteredDictonary = splitedSub.reduce((acc, sub) => {
+    dictionary[sub]?.forEach((d) => {
+      const newAcc = Object.hasOwn(acc, d) ? acc[d] : 0
+      acc[d] = newAcc + 1
+    })
+    return acc
+  }, {})
+  const keys = Object.keys(filteredDictonary)
+  return keys.sort((a, b) => filteredDictonary[b] - filteredDictonary[a])
+}
+
 export default search
