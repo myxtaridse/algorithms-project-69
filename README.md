@@ -1,5 +1,5 @@
 ### Hexlet tests and linter status:
-[![Actions Status](https://github.com/myxtaridse/algorithms-project-69/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/myxtaridse/algorithms-project-69/actions) [![test-check](https://github.com/myxtaridse/algorithms-project-69/actions/workflows/test-check.yml/badge.svg)](https://github.com/myxtaridse/algorithms-project-69/actions/workflows/test-check.yml) 
+[![Actions Status](https://github.com/myxtaridse/algorithms-project-69/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/myxtaridse/algorithms-project-69/actions) [![test-check](https://github.com/myxtaridse/algorithms-project-69/actions/workflows/test-check.yml/badge.svg)](https://github.com/myxtaridse/algorithms-project-69/actions/workflows/test-check.yml) [![Build](https://github.com/myxtaridse/algorithms-project-69/actions/workflows/sonar_qube.yml/badge.svg)](https://github.com/myxtaridse/algorithms-project-69/actions/workflows/sonar_qube.yml)
 
 # Search engine
 Поисковый движок - это проект, в котором применяются основные алгоритмы и структуры данных в поисковых системах.
