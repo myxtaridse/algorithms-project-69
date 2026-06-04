@@ -2,14 +2,11 @@ const buildDictionary = (docs) => {
   const dictionary = {}
   docs.forEach((doc) => {
     const removeApostrophe = doc.text.replace(/'/g, '')
-    console.log(removeApostrophe)
     const splited = removeApostrophe.split(' ').map(s => s.toLowerCase().match(/\w+/))
 
     splited.forEach((str) => {
       if (Object.hasOwn(dictionary, str)) {
-        if (!dictionary[str].includes(doc.id)) {
-          dictionary[str].push(doc.id)
-        }
+        dictionary[str].push(doc.id)
       }
       else {
         dictionary[str] = [doc.id]
@@ -25,13 +22,24 @@ const search = (docs, substring) => {
   const splitedSub = substring.split(' ').map(s => s.toLowerCase().match(/\w+/)).filter(s => s).map(m => m[0])
   const filteredDictonary = splitedSub.reduce((acc, sub) => {
     dictionary[sub]?.forEach((d) => {
-      const newAcc = Object.hasOwn(acc, d) ? acc[d] : 0
-      acc[d] = newAcc + 1
+      if (!Object.hasOwn(acc, d)) {
+        acc[d] = { [sub]: 0 }
+      }
+      acc[d] = {
+        ...acc[d],
+        [sub]: (Object.hasOwn(acc[d], sub) ? Number(acc[d][sub]) : 0) + 1,
+      }
     })
     return acc
   }, {})
-  const keys = Object.keys(filteredDictonary)
-  return keys.sort((a, b) => filteredDictonary[b] - filteredDictonary[a])
+  return Object.entries(filteredDictonary).sort(([, valueA], [, valueB]) => {
+    if (Object.keys(valueA).length === Object.keys(valueB).length) {
+      const countA = Object.values(valueA).reduce((acc, v) => acc + v)
+      const countB = Object.values(valueB).reduce((acc, v) => acc + v)
+      return countA < countB ? 1 : -1
+    }
+    return Object.keys(valueA).length < Object.keys(valueB).length ? 1 : -1
+  }).map(([key]) => key)
 }
 
 export default search
