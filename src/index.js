@@ -20,8 +20,8 @@ const search = (docs, substring) => {
   const dictionary = buildDictionary(docs)
 
   const substringIDF = splitedSubstring.reduce((acc, sub) => {
-    if (dictionary[sub])
-      acc[sub] = Math.log(countDocs / (dictionary[sub].length + 1)) + 1
+    const countDocsWithSub = [...new Set(dictionary[sub])].length
+    acc[sub] = Math.log(countDocs / (countDocsWithSub + 1)) + 1
     return acc
   }, {})
 

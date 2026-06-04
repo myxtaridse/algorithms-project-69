@@ -10,7 +10,7 @@ describe('should work correctly with normal data', () => {
   })
 
   test('should show correctly, taking into account the fuzzy search', () => {
-    expect(search(docs, 'shoot at me')).toEqual(['doc1', 'doc2'])
+    expect(search(docs, 'shoot at me')).toEqual(['doc2', 'doc1'])
     expect(search(docs, 'shoot')).toEqual(['doc2', 'doc1'])
     expect(search(docs, 'shoot shoot')).toEqual(['doc2', 'doc1'])
   })
