@@ -1,9 +1,8 @@
 import js from '@eslint/js';
 import globals from 'globals';
 import stylistic from '@stylistic/eslint-plugin';
-import { defineConfig } from 'eslint/config';
 
-export default defineConfig([
+export default [
   {
     rules: {
       '@stylistic/semi': ['error', 'always'],
@@ -15,4 +14,4 @@ export default defineConfig([
       globals: { ...globals.node, ...globals.jest },
     },
   },
-]);
+];
