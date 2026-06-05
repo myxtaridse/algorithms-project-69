@@ -5,12 +5,17 @@ import stylistic from '@stylistic/eslint-plugin';
 
 export default defineConfig([
   {
-    rules: { semi: ['error', 'always'] },
+    rules: { 
+      semi: ['error', 'always'],
+      'comma-dangle': ['error', 'always-multiline'],
+      'import/no-extraneous-dependencies': 'off',
+      'import/no-unresolved': 'off',
+    },
     files: ['**/*.{js,mjs,cjs}'],
     plugins: { js, '@stylistic': stylistic },
     extends: ['js/recommended'],
     languageOptions: {
-      globals: { ...globals.node, ...globals.jest }
-    }
+      globals: { ...globals.node, ...globals.jest },
+    },
   },
 ]);

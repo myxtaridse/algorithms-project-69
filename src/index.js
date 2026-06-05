@@ -1,4 +1,4 @@
-const buildDictionary = docs => docs
+const buildDictionary = (docs) => docs
   .reduce((acc, doc) => {
     const splitedText = doc.text.toLowerCase().match(/[\w']+/g);
 
@@ -9,12 +9,12 @@ const buildDictionary = docs => docs
       acc[sub].push(doc.id);
     });
     return acc;
-  }, {}
+  }, {},
 );
 
 const search = (docs, substring) => {
   const splitedSubstring = substring.toLowerCase().match(/[\w']+/g);
-  if (!splitedSubstring || !splitedSubstring.length) return [];
+  if (!splitedSubstring?.length) return [];
 
   const countDocs = docs.length;
   const dictionary = buildDictionary(docs);
@@ -39,13 +39,12 @@ const search = (docs, substring) => {
   }, {});
 
   return Object.entries(coincidences).map(([key, value]) => {
-    const { text } = docs.find(({id}) => id === key);
+    const { text } = docs.find(({ id }) => id === key);
     const words = text.match(/[\w']+/g);
 
     const docScore = Object.entries(value).reduce((acc, [sub, countSub]) => {
       const tf = countSub / words.length;
-      acc += (tf * substringIDF[sub]);
-      return acc;
+      return acc + (tf * substringIDF[sub]);
     }, 0);
     return { id: key, score: docScore };
   }).sort((a, b) => b.score - a.score).map(({ id }) => id);
