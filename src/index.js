@@ -9,8 +9,7 @@ const buildDictionary = (docs) => docs
       acc[sub].push(doc.id);
     });
     return acc;
-  }, {},
-);
+  }, {});
 
 const search = (docs, substring) => {
   const splitedSubstring = substring.toLowerCase().match(/[\w']+/g);
