@@ -1,9 +1,11 @@
 import js from '@eslint/js';
 import globals from 'globals';
 import stylistic from '@stylistic/eslint-plugin';
+import { defineConfig } from 'jest';
 
-export default [
+export default defineConfig([
   {
+    ignores: ['eslint.config.js'],
     rules: {
       '@stylistic/semi': ['error', 'always'],
       'comma-dangle': ['error', 'always-multiline'],
@@ -14,10 +16,4 @@ export default [
       globals: { ...globals.node, ...globals.jest },
     },
   },
-  {
-    files: ['eslint.config.js'],
-    rules: {
-      'import/no-extraneous-dependencies': 'off',
-    },
-  },
-];
+]);
