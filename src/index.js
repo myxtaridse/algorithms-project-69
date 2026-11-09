@@ -1,18 +1,9 @@
-const buildDictionary = (docs) => docs
-  .reduce((acc, doc) => {
-    const splitedText = doc.text.toLowerCase().match(/[\w']+/g);
-
-    splitedText.forEach((sub) => {
-      if (!Object.hasOwn(acc, sub)) {
-        acc[sub] = [];
-      }
-      acc[sub].push(doc.id);
-    });
-    return acc;
-  }, {});
+import buildDictionary from "./buildDictionary";
+import { getSplitedStr } from "./utils/regexp";
 
 const search = (docs, substring) => {
-  const splitedSubstring = substring.toLowerCase().match(/[\w']+/g);
+  const splitedSubstring = getSplitedStr(substring);
+
   if (!splitedSubstring?.length) return [];
 
   const countDocs = docs.length;
@@ -39,10 +30,10 @@ const search = (docs, substring) => {
 
   return Object.entries(coincidences).map(([key, value]) => {
     const { text } = docs.find(({ id }) => id === key);
-    const words = text.match(/[\w']+/g);
-
+    const lengthText = getSplitedStr(text).length;
+    
     const docScore = Object.entries(value).reduce((acc, [sub, countSub]) => {
-      const tf = countSub / words.length;
+      const tf = countSub / lengthText;
       return acc + (tf * substringIDF[sub]);
     }, 0);
     return { id: key, score: docScore };
